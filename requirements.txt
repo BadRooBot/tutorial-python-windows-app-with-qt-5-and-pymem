@@ -5,3 +5,5 @@ pymem
 pyqt5-tools
 subprocess32
 PyQt5Designer
+auto-py-to-exe
+pyinstaller
