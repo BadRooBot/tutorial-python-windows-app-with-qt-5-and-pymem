@@ -68,7 +68,7 @@ class Ui_MainWindow(QMainWindow):
         self.btn_stop.triggered.connect(lambda:self.Stop())
         self.btn_start.triggered.connect(lambda:self.Start("King"))
         
-        self.conquerProcess=[]
+        self.NotepadProcess=[]
         self.moudleList=[]
         self.handlerList=[]
 
@@ -98,25 +98,18 @@ class Ui_MainWindow(QMainWindow):
     
     def getAllConquerProc(self):
         processList=[p.info for p in psutil.process_iter(['name','pid']) ]
-        self.conquerProcess=[p for p in processList if p['name'].lower()=='conquer.exe']
-        for i in range(len(self.conquerProcess)):
-            id=self.conquerProcess[i]['pid']
-            name=self.conquerProcess[i]['name']
+        self.NotepadProcess=[p for p in processList if p['name'].lower()=='Notepad.exe']
+        for i in range(len(self.NotepadProcess)):
+            id=self.NotepadProcess[i]['pid']
+            name=self.NotepadProcess[i]['name']
             handel=Pymem(id)
             module=module_from_name(handel.process_handle,name).lpBaseOfDll
             self.handlerList.append(handel)
             self.moudleList.append(module)
-        self.lbl_name.setText(f'{self.conquerProcess}')    
-            # handel.write_int(module+0x143fed,2)#with out pointer
-            # handel.write_int(self.getAddrOneOrMorePointer(handel,module+0x143fed,[0x3A0]),2)#with  pointer
+        self.lbl_name.setText(f'{self.NotepadProcess}')    
+           
             
-    def getAddrOneOrMorePointer(self,handel,basseAddr,pointr):
-        _addr=handel.read_int(basseAddr)
-        for offset in pointr:
-            if offset != pointr[-1]:
-                _addr=handel.read_int(_addr+offset)
-            _addr=_addr+offset[-1]
-        return _addr            
+             
                     
         
         
